@@ -1,0 +1,531 @@
+/* ==============================
+   Design tokens (light + dark)
+   =============================== */
+
+:root {
+  /* Base surfaces */
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-soft: #f7f4ee;
+
+  /* Text */
+  --text-main: #222222;
+  --text-muted: #7a7974;
+  --text-on-accent: #f9f8f4;
+
+  /* Accent / brand */
+  --accent: #01696f;
+  --accent-strong: #0c4e54;
+  --accent-soft: rgba(1, 105, 111, 0.18);
+
+  /* Status colors */
+  --success: #4caf50;
+  --warning: #ff9800;
+  --danger: #f44336;
+
+  /* Borders / shadows / radius */
+  --border-subtle: rgba(0, 0, 0, 0.03);
+  --border-soft: #e0ddd8;
+  --shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-strong: 0 8px 22px rgba(0, 0, 0, 0.10);
+  --radius-card: 10px;
+  --radius-pill: 999px;
+}
+
+/* Dark theme override: toggled via body.theme-dark */
+body.theme-dark {
+  --bg: #020617;
+  --surface: #020617;
+  --surface-soft: #111827;
+
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-on-accent: #020617;
+
+  --accent: #22d3ee;
+  --accent-strong: #0ea5e9;
+  --accent-soft: rgba(34, 211, 238, 0.32);
+
+  --border-subtle: rgba(148, 163, 184, 0.25);
+  --border-soft: rgba(148, 163, 184, 0.35);
+  --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.70);
+  --shadow-strong: 0 24px 60px rgba(0, 0, 0, 0.85);
+}
+
+/* ==============================
+   Global reset & base styles
+   =============================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* ==============================
+   Header
+   =============================== */
+
+.header {
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: var(--text-on-accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  justify-content: space-between;
+}
+
+.header-text {
+  max-width: 70%;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.header p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Optional small area for theme toggle, role switcher, etc. */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==============================
+   Layout
+   =============================== */
+
+.role-switcher {
+  margin-top: 10px;
+  display: inline-flex;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.role-tab {
+  background: transparent;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-on-accent);
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease-out,
+    transform 0.12s ease-out,
+    box-shadow 0.18s ease-out;
+}
+
+.role-tab:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.role-tab.active {
+  background-color: var(--surface);
+  color: var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px 32px;
+}
+
+/* ==============================
+   Cards (main content blocks)
+   =============================== */
+
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-subtle);
+  transition:
+    box-shadow 0.18s ease-out,
+    transform 0.18s ease-out,
+    border-color 0.18s ease-out,
+    background-color 0.18s ease-out;
+}
+
+/* Only apply hover lift on devices that support hover */
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: var(--shadow-strong);
+    transform: translateY(-2px);
+    border-color: var(--accent-soft);
+  }
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.card p {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+/* ==============================
+   Forms
+   =============================== */
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-row label {
+  font-size: 14px;
+}
+
+.form-row input,
+.form-row textarea,
+.form-row select {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-soft);
+  font-size: 14px;
+  background-color: #fbfbf9;
+  transition:
+    border-color 0.16s ease-out,
+    box-shadow 0.16s ease-out,
+    background-color 0.16s ease-out;
+}
+
+body.theme-dark .form-row input,
+body.theme-dark .form-row textarea,
+body.theme-dark .form-row select {
+  background-color: #020617;
+  color: var(--text-main);
+}
+
+.form-row input:focus,
+.form-row textarea:focus,
+.form-row select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  background-color: var(--surface);
+}
+
+/* ==============================
+   Error / status text
+   =============================== */
+
+.error-text {
+  color: #a12c7b;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/* ==============================
+   Lists (Goals, etc.)
+   =============================== */
+
+#goal-list {
+  list-style-type: none;
+  margin-top: 8px;
+}
+
+#goal-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+/* ==============================
+   Buttons
+   =============================== */
+
+button {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: var(--text-on-accent);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+  transition:
+    background-color 0.18s ease-out,
+    box-shadow 0.18s ease-out,
+    transform 0.12s ease-out,
+    filter 0.18s ease-out;
+}
+
+button:hover {
+  filter: brightness(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+button:active {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  transform: translateY(0);
+}
+
+/* Secondary / neutral button */
+.secondary-button {
+  background: var(--surface-soft);
+  color: var(--text-main);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+}
+
+.secondary-button:hover {
+  background-color: #e0ddd8;
+}
+
+/* ==============================
+   Tables
+   =============================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th,
+td {
+  border: 1px solid var(--border-soft);
+  padding: 6px 8px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--surface-soft);
+  font-weight: 600;
+}
+
+/* ==============================
+   KPI Cards
+   =============================== */
+
+.kpi-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.kpi-card {
+  flex: 1 1 160px;
+  padding: 10px 12px;
+  border-radius: var(--radius-card);
+  background: linear-gradient(145deg, var(--surface-soft), var(--surface));
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-subtle);
+  transition:
+    transform 0.18s ease-out,
+    box-shadow 0.18s ease-out;
+}
+
+@media (hover: hover) {
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+  }
+}
+
+.kpi-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.kpi-value {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ==============================
+   Quarter cards & progress bars
+   =============================== */
+
+.quarter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.quarter-card {
+  flex: 1 1 180px;
+  padding: 10px 12px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  background-color: var(--surface);
+}
+
+.quarter-card.green {
+  border-color: var(--success);
+  background-color: #e6f4ea;
+}
+
+.quarter-card.amber {
+  border-color: var(--warning);
+  background-color: #fff3e0;
+}
+
+.quarter-card.red {
+  border-color: var(--danger);
+  background-color: #ffebee;
+}
+
+body.theme-dark .quarter-card.green {
+  background-color: rgba(76, 175, 80, 0.18);
+}
+
+body.theme-dark .quarter-card.amber {
+  background-color: rgba(255, 152, 0, 0.18);
+}
+
+body.theme-dark .quarter-card.red {
+  background-color: rgba(244, 67, 54, 0.18);
+}
+
+.quarter-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.quarter-text {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* Horizontal progress bar */
+.progress {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-soft);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent);
+  transition: width 0.3s ease-out;
+}
+
+/* ==============================
+   Analytics bars (bar charts)
+   =============================== */
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.analytics-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.analytics-label {
+  min-width: 80px;
+}
+
+.analytics-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-soft);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.analytics-bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transition: width 0.3s ease-out;
+}
+
+.analytics-value {
+  min-width: 32px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ==============================
+   Responsive tweaks
+   =============================== */
+
+@media (max-width: 600px) {
+  .header {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-text {
+    max-width: 100%;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .container {
+    padding: 0 12px 24px;
+    margin-top: 16px;
+  }
+
+  .card {
+    padding: 14px 16px;
+  }
+
+  button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

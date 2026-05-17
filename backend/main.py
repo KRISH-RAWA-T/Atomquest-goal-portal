@@ -1129,6 +1129,8 @@ def admin_reset_employee():
 
 # Serve frontend (must be last)
 from fastapi.staticfiles import StaticFiles
-frontend_dir = Path(__file__).resolve().parent.parent / "frontend"
+frontend_dir = Path(__file__).resolve().parent / "static"
 if frontend_dir.exists():
     app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="static")
+
+   
