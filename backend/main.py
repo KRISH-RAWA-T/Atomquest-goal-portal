@@ -1,3 +1,4 @@
+from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -14,23 +15,15 @@ app = FastAPI(
     description="In-house Goal Setting & Tracking Portal backend",
 )
 
-origins = [
-    "http://localhost",
-    "http://127.0.0.1",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
-    "null",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-DB_PATH = "atomquest.db"
+DB_PATH = Path(__file__).resolve().parent / "atomquest.db"
 QuarterType = Literal["Q1", "Q2", "Q3", "Q4"]
 
 
@@ -1133,3 +1126,9 @@ def admin_reset_employee():
 
     return {"message": "Employee data, escalations, and audit log reset by Admin."}
 
+
+# Serve frontend (must be last)
+from fastapi.staticfiles import StaticFiles
+frontend_dir = Path(__file__).resolve().parent.parent / "frontend"
+if frontend_dir.exists():
+    app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="static")
