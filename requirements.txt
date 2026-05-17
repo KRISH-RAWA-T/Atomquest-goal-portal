@@ -1,6 +1,3 @@
-echo "fastapi
+fastapi
 uvicorn[standard]
-aiofiles" > requirements.txt
-git add .
-git commit -m "add requirements"
-git push
+aiofiles
