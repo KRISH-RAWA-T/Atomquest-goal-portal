@@ -1,0 +1,134 @@
+ATOMQUEST GOAL PORTAL - DEMO SCRIPT
+
+1. INTRODUCTION
+
+Hello everyone.
+This is AtomQuest Goal Portal, a role-based goal management system designed for Employees, Managers, and Admin/HR.
+
+The portal allows employees to create goals, update quarterly progress, send goal sheets for approval, and helps managers and HR track performance, escalations, and audit history.
+
+--------------------------------------------------
+
+2. EMPLOYEE FLOW
+
+First, I switch to the Employee role.
+
+Here the employee can:
+- create goals,
+- see current goals,
+- submit the goal sheet,
+- and add quarterly achievement updates.
+
+Now I create a sample goal by filling:
+- thrust area,
+- title,
+- description,
+- unit of measurement,
+- target,
+- and weightage.
+
+Once I add the goal, it appears in the Current Goals section.
+
+I can create multiple goals until the total weightage is complete.
+
+After goals are ready, I click "Submit Goal Sheet to Manager".
+
+Now the sheet status changes from Draft to Submitted.
+
+Next, I open the Quarterly Achievement Update section.
+Here I choose a goal, select a quarter like Q1 or Q2, enter actual achievement, and set the status such as On Track or Completed.
+
+After submission, that quarterly data becomes visible in reports, dashboards, analytics, and breakdown sections.
+
+--------------------------------------------------
+
+3. MANAGER FLOW
+
+Now I switch to the Manager role.
+
+The manager can see:
+- dashboard KPIs,
+- quarterly completion summary,
+- goal-wise quarterly breakdown,
+- achievement report,
+- analytics,
+- and the manager decision area.
+
+The manager reviews the submitted goal sheet and can either:
+- approve the goals, or
+- send them back for rework with comments.
+
+This simulates the L1 approval workflow.
+
+The manager can also raise an escalation if a goal is off track.
+
+In the Raise Escalation section, I select:
+- goal,
+- quarter,
+- severity,
+- owner,
+- deadline,
+- reason,
+- and optional comment.
+
+After saving, the escalation appears in the Escalation Tracker.
+
+--------------------------------------------------
+
+4. ADMIN / HR FLOW
+
+Now I switch to the Admin / HR role.
+
+Admin can:
+- view dashboard and reports,
+- view analytics,
+- view audit log,
+- unlock the goal sheet,
+- and reset employee data.
+
+The Unlock Goal Sheet action is useful when the sheet needs to be reopened.
+
+The Reset Employee Data action clears the demo data and helps restart the workflow for testing.
+
+The Audit Log records key changes, so admin can track important system actions.
+
+--------------------------------------------------
+
+5. REPORTS AND ANALYTICS
+
+The Achievement Report shows planned versus actual values quarter-wise.
+
+The quarter filter allows us to view only Q1, Q2, Q3, or Q4 data.
+
+The dashboard shows:
+- total goals,
+- goal sheet status,
+- total weightage,
+- quarterly check-in completion.
+
+The analytics section summarizes:
+- goals by thrust area,
+- goals by unit of measurement,
+- and average progress score per quarter.
+
+--------------------------------------------------
+
+6. HIGHLIGHTS
+
+Key highlights of this project:
+- role-based workflow
+- quarterly goal tracking
+- manager approval process
+- admin intervention
+- audit logging
+- escalation handling
+- analytics dashboard
+- dark mode support
+
+--------------------------------------------------
+
+7. CONCLUSION
+
+AtomQuest Goal Portal demonstrates a complete mini performance management workflow from goal creation to progress tracking, review, reporting, and escalation.
+
+Thank you.
