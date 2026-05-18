@@ -2,38 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AtomQuest Goal Portal</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-   <header class="header">
-  <div class="header-text">
-    <h1>AtomQuest Goal Portal</h1>
-    <p>Set, track, and approve goals across Employees, Managers, and HR.</p>
+    <header class="header">
+      <div class="header-text">
+        <h1>AtomQuest Goal Portal</h1>
+        <p>Set, track, and approve goals across Employees, Managers, and HR.</p>
 
-    <div class="role-switcher">
-      <button class="role-tab active" data-role-tab="employee" type="button">Employee</button>
-      <button class="role-tab" data-role-tab="manager" type="button">Manager (L1)</button>
-      <button class="role-tab" data-role-tab="admin" type="button">Admin / HR</button>
-    </div>
-  </div>
+        <div class="role-switcher">
+          <button class="role-tab active" data-role-tab="employee" type="button">Employee</button>
+          <button class="role-tab" data-role-tab="manager" type="button">Manager (L1)</button>
+          <button class="role-tab" data-role-tab="admin" type="button">Admin / HR</button>
+        </div>
+      </div>
 
-  <div class="header-actions">
-    <button id="theme-toggle" class="secondary-button" type="button">
-      🌓 Theme
-    </button>
-  </div>
-</header>
+      <div class="header-actions">
+        <button id="theme-toggle" class="secondary-button" type="button">🌓 Theme</button>
+      </div>
+    </header>
 
     <main class="container">
-      <!-- Backend test card: visible to all -->
       <section class="card" data-roles="all">
         <h2>Backend Connection Test</h2>
         <p id="ping-status">Click the button to test API.</p>
         <button id="ping-button" type="button">Test Backend</button>
       </section>
 
-      <!-- KPI Dashboard: Manager + Admin -->
       <section class="card" data-roles="manager,admin">
         <h2>Dashboard</h2>
 
@@ -52,27 +49,18 @@
           </div>
         </div>
 
-        <h3 style="margin-top: 16px; margin-bottom: 8px;">
-          Quarterly Check-in Completion
-        </h3>
-        <div id="quarter-summary" class="quarter-row">
-          <!-- Filled by JS -->
-        </div>
+        <h3 style="margin-top: 16px; margin-bottom: 8px;">Quarterly Check-in Completion</h3>
+        <div id="quarter-summary" class="quarter-row"></div>
       </section>
 
-      <!-- Goal-wise Quarterly Breakdown: Manager + Admin -->
-<section class="card" data-roles="manager,admin">
-  <h2>Goal-wise Quarterly Breakdown</h2>
-  <p style="font-size: 13px; margin-bottom: 8px;">
-    Detailed quarter-wise progress for each individual goal.
-  </p>
+      <section class="card" data-roles="manager,admin">
+        <h2>Goal-wise Quarterly Breakdown</h2>
+        <p style="font-size: 13px; margin-bottom: 8px;">
+          Detailed quarter-wise progress for each individual goal.
+        </p>
+        <div id="goal-quarter-breakdown"></div>
+      </section>
 
-  <div id="goal-quarter-breakdown">
-    <!-- Filled by JS -->
-  </div>
-</section>
-
-      <!-- Employee Goal Creation -->
       <section class="card" data-roles="employee">
         <h2>Employee View – Goal Sheet</h2>
 
@@ -128,13 +116,11 @@
         </div>
       </section>
 
-      <!-- List of goals (Employee) -->
       <section class="card" data-roles="employee">
         <h2>Current Goals (Employee)</h2>
         <ul id="goal-list"></ul>
       </section>
 
-      <!-- Phase 2: Quarterly Achievement Update (Employee) -->
       <section class="card" data-roles="employee">
         <h2>Quarterly Achievement Update (Employee)</h2>
 
@@ -159,13 +145,7 @@
 
           <div class="form-row">
             <label for="achievement-actual">Actual Achievement</label>
-            <input
-              type="number"
-              id="achievement-actual"
-              min="0.01"
-              step="0.01"
-              required
-            />
+            <input type="number" id="achievement-actual" min="0.01" step="0.01" required />
           </div>
 
           <div class="form-row">
@@ -184,121 +164,108 @@
       </section>
 
       <section class="card" data-roles="employee">
-  <h2>Escalations (Employee View)</h2>
-  <p style="font-size: 13px; margin-bottom: 8px;">
-    Escalations raised against goals that need attention.
-  </p>
+        <h2>Escalations (Employee View)</h2>
+        <p style="font-size: 13px; margin-bottom: 8px;">
+          Escalations raised against goals that need attention.
+        </p>
+        <div id="employee-escalation-list"></div>
+      </section>
 
-  <div id="employee-escalation-list">
-    <!-- Filled by JS -->
-  </div>
-</section>
+      <section class="card" data-roles="manager">
+        <h2>Raise Escalation</h2>
+        <p style="font-size: 13px; margin-bottom: 8px;">
+          Raise an escalation when a goal is off track or needs intervention.
+        </p>
 
-<section class="card" data-roles="manager">
-  <h2>Raise Escalation</h2>
-  <p style="font-size: 13px; margin-bottom: 8px;">
-    Raise an escalation when a goal is off track or needs intervention.
-  </p>
+        <form id="escalation-form">
+          <div class="form-row">
+            <label for="escalation-goal">Goal</label>
+            <select id="escalation-goal" required>
+              <option value="">-- Select goal --</option>
+            </select>
+          </div>
 
-  <form id="escalation-form">
-    <div class="form-row">
-      <label for="escalation-goal">Goal</label>
-      <select id="escalation-goal" required>
-        <option value="">-- Select goal --</option>
-      </select>
-    </div>
+          <div class="form-row">
+            <label for="escalation-quarter">Quarter</label>
+            <select id="escalation-quarter" required>
+              <option value="">-- Select quarter --</option>
+              <option value="Q1">Q1</option>
+              <option value="Q2">Q2</option>
+              <option value="Q3">Q3</option>
+              <option value="Q4">Q4</option>
+            </select>
+          </div>
 
-    <div class="form-row">
-      <label for="escalation-quarter">Quarter</label>
-      <select id="escalation-quarter" required>
-        <option value="">-- Select quarter --</option>
-        <option value="Q1">Q1</option>
-        <option value="Q2">Q2</option>
-        <option value="Q3">Q3</option>
-        <option value="Q4">Q4</option>
-      </select>
-    </div>
+          <div class="form-row">
+            <label for="escalation-severity">Severity</label>
+            <select id="escalation-severity" required>
+              <option value="">-- Select severity --</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+          </div>
 
-    <div class="form-row">
-      <label for="escalation-severity">Severity</label>
-      <select id="escalation-severity" required>
-        <option value="">-- Select severity --</option>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-        <option value="Critical">Critical</option>
-      </select>
-    </div>
+          <div class="form-row">
+            <label for="escalation-owner">Owner</label>
+            <input type="text" id="escalation-owner" required />
+          </div>
 
-    <div class="form-row">
-      <label for="escalation-owner">Owner</label>
-      <input type="text" id="escalation-owner" required />
-    </div>
+          <div class="form-row">
+            <label for="escalation-deadline">Deadline</label>
+            <input type="date" id="escalation-deadline" required />
+          </div>
 
-    <div class="form-row">
-      <label for="escalation-deadline">Deadline</label>
-      <input type="date" id="escalation-deadline" required />
-    </div>
+          <div class="form-row">
+            <label for="escalation-reason">Reason</label>
+            <textarea id="escalation-reason" rows="3" required></textarea>
+          </div>
 
-    <div class="form-row">
-      <label for="escalation-reason">Reason</label>
-      <textarea id="escalation-reason" rows="3" required></textarea>
-    </div>
+          <div class="form-row">
+            <label for="escalation-comment">Comment</label>
+            <textarea id="escalation-comment" rows="2"></textarea>
+          </div>
 
-    <div class="form-row">
-      <label for="escalation-comment">Comment</label>
-      <textarea id="escalation-comment" rows="2"></textarea>
-    </div>
+          <button id="create-escalation-button" type="submit">Raise Escalation</button>
+          <p id="escalation-error" class="error-text"></p>
+        </form>
+      </section>
 
-    <button id="create-escalation-button" type="submit">Raise Escalation</button>
-    <p id="escalation-error" class="error-text"></p>
-  </form>
-</section>
+      <section class="card" data-roles="manager,admin">
+        <h2>Escalation Tracker</h2>
+        <p style="font-size: 13px; margin-bottom: 8px;">
+          Open and resolved escalations across goals and quarters.
+        </p>
 
-<section class="card" data-roles="manager,admin">
-  <h2>Escalation Tracker</h2>
-  <p style="font-size: 13px; margin-bottom: 8px;">
-    Open and resolved escalations across goals and quarters.
-  </p>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Goal</th>
+                <th>Quarter</th>
+                <th>Severity</th>
+                <th>Owner</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th>Comment</th>
+              </tr>
+            </thead>
+            <tbody id="escalation-tbody"></tbody>
+          </table>
+        </div>
+      </section>
 
-  <div style="overflow-x: auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Goal</th>
-          <th>Quarter</th>
-          <th>Severity</th>
-          <th>Owner</th>
-          <th>Deadline</th>
-          <th>Status</th>
-          <th>Reason</th>
-          <th>Comment</th>
-        </tr>
-      </thead>
-      <tbody id="escalation-tbody">
-        <!-- Filled by JS -->
-      </tbody>
-    </table>
-  </div>
-</section>
-
-      <!-- Achievement Report: Manager + Admin -->
       <section class="card" data-roles="manager,admin">
         <h2>Achievement Report (Planned vs Actual)</h2>
 
-        <div
-          style="margin-bottom: 8px; display: flex; gap: 8px; align-items: center;"
-        >
+        <div style="margin-bottom: 8px; display: flex; gap: 8px; align-items: center;">
           <button id="download-csv-button" type="button">Download CSV</button>
 
-          <label for="report-quarter-filter" style="font-size: 13px;">
-            Quarter:
-          </label>
-          <select
-            id="report-quarter-filter"
-            style="font-size: 13px; padding: 2px 4px;"
-          >
+          <label for="report-quarter-filter" style="font-size: 13px;">Quarter:</label>
+          <select id="report-quarter-filter" style="font-size: 13px; padding: 2px 4px;">
             <option value="ALL">All</option>
             <option value="Q1">Q1</option>
             <option value="Q2">Q2</option>
@@ -323,49 +290,35 @@
                 <th>Score</th>
               </tr>
             </thead>
-            <tbody id="report-tbody">
-              <!-- Filled by JS -->
-            </tbody>
+            <tbody id="report-tbody"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- Analytics: Manager + Admin -->
       <section class="card" data-roles="manager,admin">
         <h2>Analytics</h2>
         <p style="font-size: 13px; margin-bottom: 8px;">
-          Snapshot of goal distribution and average scores (for demo QoQ analytics).
+          Snapshot of goal distribution and average scores.
         </p>
 
         <div class="analytics-grid">
           <div>
-            <h3 style="font-size: 14px; margin-bottom: 4px;">
-              Goals by Thrust Area
-            </h3>
-            <div id="analytics-thrust-area">
-              <!-- Filled by JS -->
-            </div>
+            <h3 style="font-size: 14px; margin-bottom: 4px;">Goals by Thrust Area</h3>
+            <div id="analytics-thrust-area"></div>
           </div>
 
           <div>
             <h3 style="font-size: 14px; margin-bottom: 4px;">Goals by UoM</h3>
-            <div id="analytics-uom">
-              <!-- Filled by JS -->
-            </div>
+            <div id="analytics-uom"></div>
           </div>
         </div>
 
         <div style="margin-top: 16px;">
-          <h3 style="font-size: 14px; margin-bottom: 4px;">
-            Average Progress Score per Quarter
-          </h3>
-          <div id="analytics-quarter-scores">
-            <!-- Filled by JS -->
-          </div>
+          <h3 style="font-size: 14px; margin-bottom: 4px;">Average Progress Score per Quarter</h3>
+          <div id="analytics-quarter-scores"></div>
         </div>
       </section>
 
-      <!-- Audit Log: Admin only -->
       <section class="card" data-roles="admin">
         <h2>Audit Log</h2>
         <p style="font-size: 13px; margin-bottom: 8px;">
@@ -384,14 +337,11 @@
                 <th>After</th>
               </tr>
             </thead>
-            <tbody id="audit-tbody">
-              <!-- Filled by JS -->
-            </tbody>
+            <tbody id="audit-tbody"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- Manager View -->
       <section class="card" data-roles="manager">
         <h2>Manager View (L1)</h2>
         <p id="manager-status"></p>
@@ -399,15 +349,13 @@
         <p id="manager-comment-display"></p>
 
         <div class="form-row">
-          <label for="manager-comment-input">
-            Check-in Comment / Decision Note
-          </label>
+          <label for="manager-comment-input">Check-in Comment / Decision Note</label>
           <textarea id="manager-comment-input" rows="2"></textarea>
         </div>
 
         <div style="display: flex; gap: 8px; margin-top: 8px;">
           <button id="manager-approve-button" type="button">Approve Goals</button>
-         <button id="manager-rework-button" class="secondary-button" type="button">
+          <button id="manager-rework-button" class="secondary-button" type="button">
             Send Back for Rework
           </button>
         </div>
@@ -415,7 +363,6 @@
         <p id="manager-error" class="error-text"></p>
       </section>
 
-      <!-- Admin / HR Actions -->
       <section class="card" data-roles="admin">
         <h2>Admin / HR Actions</h2>
         <p style="font-size: 13px; margin-bottom: 8px;">
@@ -423,10 +370,10 @@
         </p>
 
         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-         <button id="admin-unlock-button" type="button">Unlock Goal Sheet (Admin)</button>
-<button id="admin-reset-button" class="secondary-button" type="button">
-  Reset Employee Data (Admin)
-</button>
+          <button id="admin-unlock-button" type="button">Unlock Goal Sheet (Admin)</button>
+          <button id="admin-reset-button" class="secondary-button" type="button">
+            Reset Employee Data (Admin)
+          </button>
         </div>
 
         <p id="admin-message" class="error-text" style="margin-top: 8px;"></p>
@@ -436,5 +383,4 @@
     <script src="app.js"></script>
   </body>
 </html>
-
 

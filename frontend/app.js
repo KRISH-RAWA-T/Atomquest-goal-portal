@@ -1,6 +1,7 @@
-const API_BASE_URL = "";
+const API_BASE_URL = "https://atomquest-goal-portal-production-dbdd.up.railway.app";
 // Keep last report rows in memory so we can filter by quarter
 let lastReportRows = [];
+
 
 // ---- DOM elements ----
 const pingButton = document.getElementById("ping-button");
@@ -50,6 +51,7 @@ const analyticsThrustArea = document.getElementById("analytics-thrust-area");
 const analyticsUom = document.getElementById("analytics-uom");
 const analyticsQuarterScores = document.getElementById("analytics-quarter-scores");
 
+
 // ---- Escalation elements ----
 const employeeEscalationList = document.getElementById("employee-escalation-list");
 const escalationForm = document.getElementById("escalation-form");
@@ -63,12 +65,11 @@ const escalationCommentInput = document.getElementById("escalation-comment");
 const escalationError = document.getElementById("escalation-error");
 const escalationTbody = document.getElementById("escalation-tbody");
 
+
 // ---- Role switcher elements ----
 const roleTabs = document.querySelectorAll("[data-role-tab]");
 const roleSections = document.querySelectorAll("[data-roles]");
 
-// Change this if your backend runs on a different host/port
-const API_BASE_URL = "http://127.0.0.1:8000";
 
 // =====================
 // Theme toggle (light/dark)
@@ -109,6 +110,7 @@ const API_BASE_URL = "http://127.0.0.1:8000";
   }
 })();
 
+
 // =========================
 // Role switcher logic
 // =========================
@@ -142,6 +144,7 @@ roleTabs.forEach((tab) => {
   });
 });
 
+
 // =========================
 // Small helpers
 // =========================
@@ -171,6 +174,7 @@ function getEscalationStatusClass(status) {
   return "red";
 }
 
+
 // ---- Backend ping test ----
 if (pingButton) {
   pingButton.addEventListener("click", async () => {
@@ -184,10 +188,11 @@ if (pingButton) {
       pingStatus.textContent = `Backend says: ${data.message}`;
     } catch (err) {
       console.error(err);
-      pingStatus.textContent = "Failed to reach backend. Is it running?";
+      pingStatus.textContent = "Failed to reach backend. Check deployed API URL.";
     }
   });
 }
+
 
 // ---- Load everything on page open ----
 window.addEventListener("DOMContentLoaded", () => {
@@ -202,6 +207,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   setActiveRole("employee");
 });
+
 
 // =========================
 // Goals & Goal Sheet
@@ -292,8 +298,8 @@ async function loadGoalSheet() {
     return;
   }
 
-  sheetError.textContent = "";
-  managerError.textContent = "";
+  if (sheetError) sheetError.textContent = "";
+  if (managerError) managerError.textContent = "";
 
   try {
     const resp = await fetch(`${API_BASE_URL}/api/goal-sheet`);
@@ -319,12 +325,13 @@ async function loadGoalSheet() {
   }
 }
 
+
 // Employee: add goal
 if (goalForm) {
   goalForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    goalError.textContent = "";
-    sheetError.textContent = "";
+    if (goalError) goalError.textContent = "";
+    if (sheetError) sheetError.textContent = "";
 
     const thrustArea = document.getElementById("thrust-area").value.trim();
     const title = document.getElementById("title").value.trim();
@@ -334,7 +341,7 @@ if (goalForm) {
     const weightage = parseInt(document.getElementById("weightage").value, 10);
 
     if (!thrustArea || !title || !description || !uom || isNaN(target) || isNaN(weightage)) {
-      goalError.textContent = "Please fill all fields.";
+      if (goalError) goalError.textContent = "Please fill all fields.";
       return;
     }
 
@@ -359,7 +366,7 @@ if (goalForm) {
       if (!resp.ok) {
         const errBody = await resp.json().catch(() => null);
         const detail = errBody && errBody.detail ? errBody.detail : `HTTP ${resp.status}`;
-        goalError.textContent = detail;
+        if (goalError) goalError.textContent = detail;
         return;
       }
 
@@ -373,16 +380,17 @@ if (goalForm) {
       loadAnalytics();
     } catch (err) {
       console.error(err);
-      goalError.textContent = "Failed to save goal. Check backend.";
+      if (goalError) goalError.textContent = "Failed to save goal. Check backend.";
     }
   });
 }
 
+
 // Employee: submit goal sheet
 if (submitSheetButton) {
   submitSheetButton.addEventListener("click", async () => {
-    sheetError.textContent = "";
-    managerError.textContent = "";
+    if (sheetError) sheetError.textContent = "";
+    if (managerError) managerError.textContent = "";
 
     try {
       const resp = await fetch(`${API_BASE_URL}/api/goal-sheet/submit`, {
@@ -392,7 +400,7 @@ if (submitSheetButton) {
       if (!resp.ok) {
         const errBody = await resp.json().catch(() => null);
         const detail = errBody && errBody.detail ? errBody.detail : `HTTP ${resp.status}`;
-        sheetError.textContent = detail;
+        if (sheetError) sheetError.textContent = detail;
         return;
       }
 
@@ -404,10 +412,11 @@ if (submitSheetButton) {
       loadAnalytics();
     } catch (err) {
       console.error(err);
-      sheetError.textContent = "Failed to submit goal sheet.";
+      if (sheetError) sheetError.textContent = "Failed to submit goal sheet.";
     }
   });
 }
+
 
 // =========================
 // Achievements
@@ -415,7 +424,7 @@ if (submitSheetButton) {
 if (achievementForm) {
   achievementForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    achievementError.textContent = "";
+    if (achievementError) achievementError.textContent = "";
 
     const goalId = parseInt(achievementGoalSelect.value, 10);
     const quarter = achievementQuarterSelect.value;
@@ -423,7 +432,7 @@ if (achievementForm) {
     const status = achievementStatusSelect.value;
 
     if (isNaN(goalId) || !quarter || isNaN(actual) || !status) {
-      achievementError.textContent = "Select goal, quarter and fill all fields.";
+      if (achievementError) achievementError.textContent = "Select goal, quarter and fill all fields.";
       return;
     }
 
@@ -445,7 +454,7 @@ if (achievementForm) {
       if (!resp.ok) {
         const errBody = await resp.json().catch(() => null);
         const detail = errBody && errBody.detail ? errBody.detail : `HTTP ${resp.status}`;
-        achievementError.textContent = detail;
+        if (achievementError) achievementError.textContent = detail;
         return;
       }
 
@@ -460,17 +469,18 @@ if (achievementForm) {
       loadAnalytics();
     } catch (err) {
       console.error(err);
-      achievementError.textContent = "Failed to update achievement.";
+      if (achievementError) achievementError.textContent = "Failed to update achievement.";
     }
   });
 }
+
 
 // =========================
 // Manager decisions
 // =========================
 async function sendManagerDecision(action) {
-  managerError.textContent = "";
-  sheetError.textContent = "";
+  if (managerError) managerError.textContent = "";
+  if (sheetError) sheetError.textContent = "";
 
   const comment = managerCommentInput.value.trim();
   const payload = { action, comment: comment || null };
@@ -487,7 +497,7 @@ async function sendManagerDecision(action) {
     if (!resp.ok) {
       const errBody = await resp.json().catch(() => null);
       const detail = errBody && errBody.detail ? errBody.detail : `HTTP ${resp.status}`;
-      managerError.textContent = detail;
+      if (managerError) managerError.textContent = detail;
       return;
     }
 
@@ -500,7 +510,7 @@ async function sendManagerDecision(action) {
     loadAnalytics();
   } catch (err) {
     console.error(err);
-    managerError.textContent = "Failed to send manager decision.";
+    if (managerError) managerError.textContent = "Failed to send manager decision.";
   }
 }
 
@@ -515,6 +525,7 @@ if (managerReworkButton) {
     sendManagerDecision("rework");
   });
 }
+
 
 // =========================
 // Report + quarter filter
@@ -584,6 +595,7 @@ if (reportQuarterFilter) {
   });
 }
 
+
 // =========================
 // KPI Dashboard
 // =========================
@@ -636,6 +648,7 @@ async function loadDashboard() {
       "<div class='quarter-card'><div class='quarter-text'>Failed to load dashboard.</div></div>";
   }
 }
+
 
 // =========================
 // Goal-wise Quarterly Breakdown
@@ -736,6 +749,7 @@ async function loadGoalQuarterBreakdown() {
   }
 }
 
+
 // =========================
 // Escalations
 // =========================
@@ -755,7 +769,6 @@ async function loadEscalations() {
 
     const rows = await resp.json();
 
-    // Employee read-only list
     if (employeeEscalationList) {
       if (!rows || rows.length === 0) {
         employeeEscalationList.innerHTML = "<p>No escalations raised yet.</p>";
@@ -780,7 +793,6 @@ async function loadEscalations() {
       }
     }
 
-    // Manager/Admin tracker table
     if (escalationTbody) {
       if (!rows || rows.length === 0) {
         escalationTbody.innerHTML = "<tr><td colspan='9'>No escalations yet.</td></tr>";
@@ -818,7 +830,7 @@ async function loadEscalations() {
 if (escalationForm) {
   escalationForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    escalationError.textContent = "";
+    if (escalationError) escalationError.textContent = "";
 
     const goal_id = parseInt(escalationGoalSelect.value, 10);
     const quarter = escalationQuarterSelect.value;
@@ -829,7 +841,7 @@ if (escalationForm) {
     const comment = escalationCommentInput.value.trim();
 
     if (isNaN(goal_id) || !quarter || !severity || !owner || !deadline || !reason) {
-      escalationError.textContent = "Please fill all escalation fields.";
+      if (escalationError) escalationError.textContent = "Please fill all escalation fields.";
       return;
     }
 
@@ -855,7 +867,7 @@ if (escalationForm) {
       if (!resp.ok) {
         const errBody = await resp.json().catch(() => null);
         const detail = errBody && errBody.detail ? errBody.detail : `HTTP ${resp.status}`;
-        escalationError.textContent = detail;
+        if (escalationError) escalationError.textContent = detail;
         return;
       }
 
@@ -866,10 +878,11 @@ if (escalationForm) {
       loadAudit();
     } catch (err) {
       console.error(err);
-      escalationError.textContent = "Failed to create escalation.";
+      if (escalationError) escalationError.textContent = "Failed to create escalation.";
     }
   });
 }
+
 
 // =========================
 // Analytics
@@ -1005,6 +1018,7 @@ async function loadAnalytics() {
   }
 }
 
+
 // =========================
 // Audit log
 // =========================
@@ -1072,6 +1086,7 @@ async function loadAudit() {
     auditTbody.innerHTML = "<tr><td colspan='7'>Failed to load audit log.</td></tr>";
   }
 }
+
 
 // =========================
 // Admin / HR actions
@@ -1144,6 +1159,7 @@ if (adminResetButton) {
     }
   });
 }
+
 
 // =========================
 // CSV download
