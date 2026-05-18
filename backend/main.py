@@ -435,9 +435,7 @@ def build_escalation_record(row) -> EscalationRecord:
 # -----------------------------
 # Basic test endpoints
 # -----------------------------
-@app.get("/")
-def read_root():
-    return {"message": "AtomQuest Goal Portal API is running"}
+
 
 
 @app.get("/api/ping")
@@ -1133,4 +1131,3 @@ frontend_dir = Path(__file__).resolve().parent / "static"
 if frontend_dir.exists():
     app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="static")
 
-   
