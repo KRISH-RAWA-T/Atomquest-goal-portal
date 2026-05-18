@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://atomquest-goal-portal-production-dbdd.up.railway.app";
+const API_BASE_URL = "";
 // Keep last report rows in memory so we can filter by quarter
 let lastReportRows = [];
 
